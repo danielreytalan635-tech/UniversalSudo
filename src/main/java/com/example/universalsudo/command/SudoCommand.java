@@ -50,7 +50,7 @@ public final class SudoCommand {
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 		dispatcher.register(
 				Commands.literal("sudo")
-						.requires(source -> source.hasPermission(REQUIRED_PERMISSION_LEVEL))
+						.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 						.then(Commands.argument("player", EntityArgument.player())
 								.then(Commands.argument("message_or_command", StringArgumentType.greedyString())
 										.executes(SudoCommand::run)))
@@ -122,7 +122,7 @@ public final class SudoCommand {
 
 		String withoutSlash = raw.startsWith("/") ? raw.substring(1) : raw;
 		issuer.sendSuccess(() -> Component.literal(
-				"Made " + target.getGameProfile().getName() + " run: /" + withoutSlash), true);
+				"Made " + target.getGameProfile().name() + " run: /" + withoutSlash), true);
 
 		return 1;
 	}
