@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "universalsudo",
+	"version": "${version}",
+	"name": "Universal Sudo",
+	"description": "Adds a single /sudo <player> <message_or_command> command that makes a player say a chat message or run a command as themselves, using vanilla's own OP permission system.",
+	"authors": [
+		"You"
+	],
+	"contact": {
+		"homepage": "https://example.com/universal-sudo"
+	},
+	"license": "MIT",
+	"environment": "server",
+	"entrypoints": {
+		"main": [
+			"com.example.universalsudo.UniversalSudo"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
