@@ -143,7 +143,7 @@ public final class SudoCommand {
 		server.getPlayerList().broadcastChatMessage(chatMessage, target, boundChatType);
 
 		issuer.sendSuccess(() -> Component.literal(
-				"Sent chat message as " + target.getGameProfile().getName() + "."), true);
+				"Sent chat message as " + target.getGameProfile().name() + "."), true);
 
 		return 1;
 	}
