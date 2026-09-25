@@ -41,7 +41,7 @@ public final class SudoCommand {
 	private static final double MOVEMENT_STEP = 0.10D;
 
 	private static final Map<String, Integer> KEY_CODES = Map.ofEntries(
-			// Letters A-Z use their GLFW key codes (ASCII values for these keys).
+			// Letters A-Z (GLFW key codes).
 			Map.entry("a", 65), Map.entry("b", 66), Map.entry("c", 67),
 			Map.entry("d", 68), Map.entry("e", 69), Map.entry("f", 70),
 			Map.entry("g", 71), Map.entry("h", 72), Map.entry("i", 73),
@@ -51,14 +51,31 @@ public final class SudoCommand {
 			Map.entry("s", 83), Map.entry("t", 84), Map.entry("u", 85),
 			Map.entry("v", 86), Map.entry("w", 87), Map.entry("x", 88),
 			Map.entry("y", 89), Map.entry("z", 90),
-			Map.entry("space", 32), Map.entry("shift", 340), Map.entry("ctrl", 341),
-			Map.entry("1", 49), Map.entry("2", 50), Map.entry("3", 51),
-			Map.entry("4", 52), Map.entry("5", 53), Map.entry("6", 54),
-			Map.entry("7", 55), Map.entry("8", 56), Map.entry("9", 57)
+			// Number row.
+			Map.entry("0", 48), Map.entry("1", 49), Map.entry("2", 50),
+			Map.entry("3", 51), Map.entry("4", 52), Map.entry("5", 53),
+			Map.entry("6", 54), Map.entry("7", 55), Map.entry("8", 56),
+			Map.entry("9", 57),
+			// Common control/navigation keys.
+			Map.entry("space", 32), Map.entry("shift", 340),
+			Map.entry("ctrl", 341), Map.entry("control", 341),
+			Map.entry("alt", 342), Map.entry("enter", 257),
+			Map.entry("return", 257), Map.entry("esc", 256),
+			Map.entry("escape", 256), Map.entry("tab", 258),
+			Map.entry("backspace", 259), Map.entry("delete", 261),
+			Map.entry("insert", 260), Map.entry("right", 262),
+			Map.entry("left", 263), Map.entry("down", 264),
+			Map.entry("up", 265), Map.entry("capslock", 280),
+			Map.entry("home", 268), Map.entry("end", 269),
+			Map.entry("pageup", 266), Map.entry("pagedown", 267),
+			Map.entry("f1", 290), Map.entry("f2", 291), Map.entry("f3", 292),
+			Map.entry("f4", 293), Map.entry("f5", 294), Map.entry("f6", 295),
+			Map.entry("f7", 296), Map.entry("f8", 297), Map.entry("f9", 298),
+			Map.entry("f10", 299), Map.entry("f11", 300), Map.entry("f12", 301)
 	);
 
 	private static final String PRESS_HELP =
-			"Keys: a-z, space, shift, ctrl, 1-9";
+			"Keys: a-z, 0-9, space, shift, ctrl, alt, enter, esc, tab, arrows, home, end, f1-f12";
 
 	private SudoCommand() {
 	}
@@ -204,7 +221,7 @@ public final class SudoCommand {
 			return true;
 		}
 
-		String firstWord = trimmed.split(" ", 2)[0];
+		String firstWord = trimmed.split("\\s+", 2)[0];
 		CommandNode<CommandSourceStack> root = server.getCommands().getDispatcher().getRoot();
 		return root.getChild(firstWord) != null;
 	}
