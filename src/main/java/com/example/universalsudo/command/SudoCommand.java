@@ -180,7 +180,7 @@ public final class SudoCommand {
 
 				issuer.sendFailure(Component.literal(
 						"Press E needs Universal Sudo on " + target.getGameProfile().name()
-						"'s client because the normal inventory screen is client-side."));
+						+ "'s client because the normal inventory screen is client-side."));
 				return 0;
 			}
 			default -> {
