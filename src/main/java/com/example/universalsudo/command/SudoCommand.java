@@ -167,7 +167,7 @@ public final class SudoCommand {
 				return 1;
 			}
 			case "e" -> {
-				if (target.getVehicle() instanceof net.minecraft.world.entity.vehicle.HasCustomInventoryScreen) {
+				if (target.getVehicle() instanceof net.minecraft.world.entity.HasCustomInventoryScreen) {
 					ServerGamePacketListenerImpl connection = target.connection;
 					connection.handlePlayerCommand(
 							new ServerboundPlayerCommandPacket(
