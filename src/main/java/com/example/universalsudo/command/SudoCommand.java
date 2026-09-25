@@ -41,30 +41,24 @@ public final class SudoCommand {
 	private static final double MOVEMENT_STEP = 0.10D;
 
 	private static final Map<String, Integer> KEY_CODES = Map.ofEntries(
-			Map.entry("w", 87),
-			Map.entry("a", 65),
-			Map.entry("s", 83),
-			Map.entry("d", 68),
-			Map.entry("e", 69),
-			Map.entry("q", 81),
-			Map.entry("r", 82),
-			Map.entry("f", 70),
-			Map.entry("space", 32),
-			Map.entry("shift", 340),
-			Map.entry("ctrl", 341),
-			Map.entry("1", 49),
-			Map.entry("2", 50),
-			Map.entry("3", 51),
-			Map.entry("4", 52),
-			Map.entry("5", 53),
-			Map.entry("6", 54),
-			Map.entry("7", 55),
-			Map.entry("8", 56),
-			Map.entry("9", 57)
+			// Letters A-Z use their GLFW key codes (ASCII values for these keys).
+			Map.entry("a", 65), Map.entry("b", 66), Map.entry("c", 67),
+			Map.entry("d", 68), Map.entry("e", 69), Map.entry("f", 70),
+			Map.entry("g", 71), Map.entry("h", 72), Map.entry("i", 73),
+			Map.entry("j", 74), Map.entry("k", 75), Map.entry("l", 76),
+			Map.entry("m", 77), Map.entry("n", 78), Map.entry("o", 79),
+			Map.entry("p", 80), Map.entry("q", 81), Map.entry("r", 82),
+			Map.entry("s", 83), Map.entry("t", 84), Map.entry("u", 85),
+			Map.entry("v", 86), Map.entry("w", 87), Map.entry("x", 88),
+			Map.entry("y", 89), Map.entry("z", 90),
+			Map.entry("space", 32), Map.entry("shift", 340), Map.entry("ctrl", 341),
+			Map.entry("1", 49), Map.entry("2", 50), Map.entry("3", 51),
+			Map.entry("4", 52), Map.entry("5", 53), Map.entry("6", 54),
+			Map.entry("7", 55), Map.entry("8", 56), Map.entry("9", 57)
 	);
 
 	private static final String PRESS_HELP =
-			"Keys: w a s d e q r f space shift ctrl 1-9";
+			"Keys: a-z, space, shift, ctrl, 1-9";
 
 	private SudoCommand() {
 	}
@@ -227,14 +221,21 @@ public final class SudoCommand {
 	}
 
 	private static int runAsChatMessage(CommandSourceStack issuer, ServerPlayer target, MinecraftServer server, String raw) {
-		PlayerChatMessage chatMessage = PlayerChatMessage.system(raw);
-		ChatType.Bound boundChatType = ChatType.bind(ChatType.CHAT, target);
+		try {
+			PlayerChatMessage chatMessage = PlayerChatMessage.system(raw);
+			ChatType.Bound boundChatType = ChatType.bind(ChatType.CHAT, target);
 
-		server.getPlayerList().broadcastChatMessage(chatMessage, target, boundChatType);
+			// Wait for the broadcast call to complete before reporting success.
+			server.getPlayerList().broadcastChatMessage(chatMessage, target, boundChatType);
 
-		issuer.sendSuccess(() -> Component.literal(
-				"Sent chat message as " + target.getGameProfile().name() + "."), true);
-
-		return 1;
+			issuer.sendSuccess(() -> Component.literal(
+					"Sent chat message as " + target.getGameProfile().name() + "."), true);
+			return 1;
+		} catch (RuntimeException error) {
+			issuer.sendFailure(Component.literal(
+					"Failed to send chat as " + target.getGameProfile().name() + ": "
+					+ String.valueOf(error.getMessage())));
+			return 0;
+		}
 	}
 }
