@@ -3,7 +3,7 @@
 	"id": "universalsudo",
 	"version": "${version}",
 	"name": "Universal Sudo",
-	"description": "Adds a single /sudo <player> <message_or_command> command that makes a player say a chat message or run a command as themselves, using vanilla's own OP permission system.",
+	"description": "Adds /sudo for running commands, sending chat as a player, and simulating keyboard presses on clients that have the client side of the mod.",
 	"authors": [
 		"You"
 	],
@@ -11,10 +11,13 @@
 		"homepage": "https://example.com/universal-sudo"
 	},
 	"license": "MIT",
-	"environment": "server",
+	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"com.example.universalsudo.UniversalSudo"
+		],
+		"client": [
+			"com.example.universalsudo.UniversalSudoClient"
 		]
 	},
 	"depends": {
